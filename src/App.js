@@ -8,10 +8,9 @@ import downloadImg from './download.png'
 
 
 import "react-chat-elements/dist/main.css"
-import { MessageBox, Input } from "react-chat-elements";
+import { Input } from "react-chat-elements";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { Comment } from 'react-loader-spinner';
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/delete-files', {
