@@ -1,0 +1,433 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color:  #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: grey;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.grid-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Two columns of equal width */
+  height: 100vh; /* Full viewport height */
+}
+
+.chat-section, .output-section {
+  background-color: white;
+  color: #282c34;
+  /* padding: 20px; */
+  /* Adds scroll to each section if content overflows */
+  overflow-y: auto; 
+}
+
+.chat-section {
+  border-right: 1px solid #ccc; /* Optional: adds a line between the two sections */
+}
+
+.code-section {
+  width: 50%;
+  border-right: 1px solid #ccc; /* Optional: adds a line between the two sections */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-top: 8px; /* Adjust spacing as needed */
+}
+
+.extracted-section {
+  margin-bottom: 20px;
+}
+
+.extracted-sentence {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.extracted-sentence:hover {
+  background-color: #e6e6e6;
+}
+
+/* styles.css */
+.list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header {
+  margin-right: 10px;
+  /* font-weight: bold; */
+}
+
+.input-container {
+  flex: 1;
+}
+
+/* SlidingToggleSwitch.css */
+.toggle-container {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 10px; /* Space between the toggle and the text */
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle-label:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: rgb(59, 58, 58);
+}
+
+.toggle-checkbox:checked + .toggle-label:before {
+  transform: translateX(35px);
+}
+
+.toggle-text {
+  font-size: 12px;
+  color: #666; /* Adjust color as needed */
+}
+
+/* Styles for the unordered list */
+ul {
+  list-style: none; /* Removes bullets */
+  padding: 0; /* Removes padding, particularly on the left */
+}
+
+/* Styles for each list item */
+li {
+  text-align: left; /* Ensures text is aligned to the left */
+  margin-bottom: 10px; /* Adds space between messages */
+}
+
+.sender-name {
+  display: inline-block; /* Keeps the name on the same line as the icon */
+  font-weight: bold;
+  margin-right: 5px;
+  vertical-align: middle;
+  margin-top: 5px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  border-radius: 50%; /* Makes the icon circular */
+  object-fit: cover; /* Ensures the image covers the area without being stretched */
+  vertical-align: middle;
+}
+
+/* Message text should be on a new line */
+.message-text {
+  display: block; /* Ensures it appears on a new line under the sender name */
+  margin-left: 40px; 
+}
+
+.html-content table {
+  width: 80%; /* Sets the table width to fill the container */
+  border-collapse: collapse; /* Collapses border to avoid double lines */
+  margin-top: 10px; /* Adds some space above the table */
+  margin-left: 40px;
+  background-color: #f8f9fa; /* Light background for the table */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
+  font-size: 11px; /* Adjusts the font size for better readability */
+  color: grey;
+}
+
+.html-content th, .html-content td {
+  border: 1px solid #dee2e6; /* Light grey border for each cell */
+  text-align: left; /* Aligns text to the left */
+  padding: 8px; /* Adds padding inside cells */
+}
+
+.html-content th {
+  background-color: grey; /* Blue background for headers */
+  color: white; /* White text for headers */
+  text-transform: uppercase; /* Makes header text uppercase */
+}
+
+.html-content tr:nth-child(even) {
+  background-color: #f2f2f2; /* Zebra striping for rows */
+  color: grey;
+}
+
+.download {
+  width: 30px;
+  height: 20px;
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 0%; /* Makes the icon circular */
+  object-fit: cover; /* Ensures the image covers the area without being stretched */
+  vertical-align: bottom;
+}
+
+
+.lds-ellipsis,
+.lds-ellipsis div {
+  box-sizing: border-box;
+}
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 5px;
+  width: 13.33333px;
+  height: 13.33333px;
+  border-radius: 50%;
+  background: currentColor;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  width: 20px;
+  aspect-ratio: 1;
+  --c: no-repeat linear-gradient(#fff 0 0);
+  background: 
+    var(--c) 0%   50%,
+    var(--c) 50%  50%,
+    var(--c) 100% 50%;
+  background-size: 20% 100%;
+  animation: l1 1s infinite linear;
+}
+@keyframes l1 {
+  0%  {background-size: 20% 100%,20% 100%,20% 100%}
+  33% {background-size: 20% 10% ,20% 100%,20% 100%}
+  50% {background-size: 20% 100%,20% 10% ,20% 100%}
+  66% {background-size: 20% 100%,20% 100%,20% 10% }
+  100%{background-size: 20% 100%,20% 100%,20% 100%}
+}
+
+.form-style-6{
+	font: 95% Arial, Helvetica, sans-serif;
+	max-width: 400px;
+	margin: 10px auto;
+	padding: 16px;
+	background: #F7F7F7;
+}
+.form-style-6 h1{
+	background: grey;
+	padding: 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
+	margin: -16px -16px 16px -16px;
+}
+.form-style-6 input[type="text"],
+.form-style-6 input[type="date"],
+.form-style-6 input[type="datetime"],
+.form-style-6 input[type="password"],
+.form-style-6 input[type="number"],
+.form-style-6 input[type="search"],
+.form-style-6 input[type="time"],
+.form-style-6 input[type="url"],
+.form-style-6 textarea,
+.form-style-6 select 
+{
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+.form-style-6 input[type="text"]:focus,
+.form-style-6 input[type="date"]:focus,
+.form-style-6 input[type="datetime"]:focus,
+.form-style-6 input[type="password"]:focus,
+.form-style-6 input[type="number"]:focus,
+.form-style-6 input[type="search"]:focus,
+.form-style-6 input[type="time"]:focus,
+.form-style-6 input[type="url"]:focus,
+.form-style-6 textarea:focus,
+.form-style-6 select:focus
+{
+	box-shadow: 0 0 5px grey;
+	padding: 3%;
+	border: 1px solid grey;
+}
+
+.form-style-6 input[type="submit"],
+.form-style-6 input[type="button"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 3%;
+	background: grey;
+	border-bottom: 2px solid grey;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;	
+	color: #fff;
+}
+.form-style-6 input[type="submit"]:hover,
+.form-style-6 input[type="button"]:hover{
+	background: grey;
+}
+
+.required {
+  color:red;
+}
+
+.label-style {
+  text-align: left;
+  width: 100%;
+  display: block; /* Ensure the label is full width */
+}
+
+.input-style {
+  margin-top: 5px; /* Space between label and input */
+  display: block; /* Input on new line */
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #282c34;
+  color: white;
+  float: left;
+  outline: none !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 14px;
+  width: 50%;
+  position: relative;  
+  z-index: 1000;         
+}
+
+.tablink:hover {
+  background-color: white !important;
+  color: black !important;
+  cursor: pointer !important;
+}
