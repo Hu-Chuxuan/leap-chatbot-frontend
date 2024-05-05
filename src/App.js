@@ -167,7 +167,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', f);
 
-    fetch('http://127.0.0.1:5000/upload-csv', {
+    fetch('https://leap-chatbot-backend.onrender.com/upload-csv', {
       method: 'POST',
       body: formData,
     })
@@ -222,7 +222,7 @@ function App() {
       descriptions  // the current state of the description input
     };
     // POST request to start the count
-    fetch('http://127.0.0.1:5000/start_count', {
+    fetch('https://leap-chatbot-backend.onrender.com/start_count', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -230,7 +230,7 @@ function App() {
 
       .then(() => {
         // Establish an EventSource connection to receive the count
-        const eventSource = new EventSource('http://127.0.0.1:5000/test_stream');
+        const eventSource = new EventSource('https://leap-chatbot-backend.onrender.com/test_stream');
         eventSource.onmessage = event => {
           const data = event.data.trim();
           if (data === "start") {
@@ -360,7 +360,7 @@ function App() {
     };
 
     // POST request to start the count
-    fetch('http://127.0.0.1:5000/warning', {
+    fetch('https://leap-chatbot-backend.onrender.com/warning', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -376,7 +376,7 @@ function App() {
     };
 
     // POST request to start the count
-    fetch('http://127.0.0.1:5000/leap-warning', {
+    fetch('https://leap-chatbot-backend.onrender.com/leap-warning', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
