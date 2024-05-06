@@ -376,6 +376,7 @@ function App() {
   };
 
   const handleWarning = (shouldWarn) => {
+    console.log("handleWarning called with:", shouldWarn);
     // Create the data object to be sent to the backend
     const data = {
       warn: shouldWarn
