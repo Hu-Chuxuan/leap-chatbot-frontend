@@ -193,16 +193,38 @@ function App() {
     setDescriptions(initialDescriptions);
   };
 
-  useEffect(() => {
-    // Polling mechanism to periodically check for the image
-    const interval = setInterval(() => {
-      // Update the image URL with a new timestamp to avoid cache issues
-      setImageUrl(`https://leap-chatbot-backend.onrender.com/static/dot_graph.png?timestamp=${new Date().getTime()}`);
-      setShowImage(true);
-    }, 5000); // Update every 5 seconds
+  // useEffect(() => {
+  //   // Polling mechanism to periodically check for the image
+  //   const interval = setInterval(() => {
+  //     // Update the image URL with a new timestamp to avoid cache issues
+  //     setImageUrl(`https://leap-chatbot-backend.onrender.com/static/dot_graph.png?timestamp=${new Date().getTime()}`);
+  //     setShowImage(true);
+  //   }, 5000); // Update every 5 seconds
 
-    return () => clearInterval(interval); // Cleanup on component unmount
+  //   return () => clearInterval(interval); // Cleanup on component unmount
+  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newUrl = `https://leap-chatbot-backend.onrender.com/static/dot_graph.png?timestamp=${new Date().getTime()}`;
+      
+      fetch(newUrl)
+        .then(response => {
+          if (response.ok) {
+            setImageUrl(newUrl);
+            setShowImage(true);
+          } else {
+            throw new Error('Image not available');
+          }
+        })
+        .catch(error => {
+          console.error('Failed to fetch image:', error);
+          setShowImage(false);
+        });
+    }, 5000);
+  
+    return () => clearInterval(interval);
   }, []);
+  
 
   const handleHover = (event) => {
     event.target.style.color = 'black'; // Change text color on hover
