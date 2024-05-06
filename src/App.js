@@ -280,7 +280,7 @@ function App() {
             if (match && match[1]) {
               setTimestamp(match[1]);
             }
-            setFilePaths({ result: "https://leap-chatbot-backend.onrender.com/uploads/result.csv" });
+            setFilePaths({ result: "https://leap-chatbot-backend.onrender.com/static/result.csv" });
             setMessages(prev => [...prev, { text: "", displayDownload: true, filename: "result", type: "file", version: timestamp, from: 'bot' }]);
           }
           else if (data.startsWith("########## Warning: ")) {
@@ -310,12 +310,12 @@ function App() {
             else if (data.startsWith("########## AT-HTML:")) {
               const html = data.slice("########## AT-HTML:".length).trim();
               setMessages(prev => [...prev, { text: "Data labeled 📑", display_html: true, htmlContent: html, filename: "labeled data", type: "text", from: 'bot' }]);
-              setFilePaths({ augmentedTable: "https://leap-chatbot-backend.onrender.com/uploads/augmented_table.csv" });
+              setFilePaths({ augmentedTable: "https://leap-chatbot-backend.onrender.com/static/augmented_table.csv" });
             }
             else if (data.startsWith("########## R-HTML:")) {
               const html = data.slice("########## R-HTML:".length).trim();
               setMessages(prev => [...prev, { text: "Result generated 📊", display_html: true, htmlContent: html, filename: "result", type: "text", from: 'bot' }]);
-              setFilePaths({ result: "https://leap-chatbot-backend.onrender.com/uploads/result.csv" });
+              setFilePaths({ result: "https://leap-chatbot-backend.onrender.com/static/result.csv" });
             }
             else if (data.startsWith("VERBOSE:")) {
               const data_new = data.slice("VERBOSE:".length).trim();
@@ -341,7 +341,7 @@ function App() {
   };
 
   function handleDownload(text, timestamp) {
-    const uri = text === "result" ? 'https://leap-chatbot-backend.onrender.com/uploads/result' + String(timestamp) + '.csv' : 'https://leap-chatbot-backend.onrender.com/uploads/augmented_table' + String(timestamp) + '.csv';
+    const uri = text === "result" ? 'https://leap-chatbot-backend.onrender.com/static/result' + String(timestamp) + '.csv' : 'https://leap-chatbot-backend.onrender.com/static/augmented_table' + String(timestamp) + '.csv';
     fetch(uri)
       .then(response => response.blob())
       .then(blob => {
