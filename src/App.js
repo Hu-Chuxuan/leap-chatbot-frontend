@@ -197,7 +197,7 @@ function App() {
     // Polling mechanism to periodically check for the image
     const interval = setInterval(() => {
       // Update the image URL with a new timestamp to avoid cache issues
-      setImageUrl(`/static/dot_graph.png?timestamp=${new Date().getTime()}`);
+      setImageUrl(`https://leap-chatbot-backend.onrender.com/static/dot_graph.png?timestamp=${new Date().getTime()}`);
       setShowImage(true);
     }, 5000); // Update every 5 seconds
 
