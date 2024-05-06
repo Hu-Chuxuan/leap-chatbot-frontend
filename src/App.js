@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/delete-files', {
+  fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
