@@ -107,7 +107,7 @@ function App() {
     setIsModalOpen(false); // Close the modal after submitting
     // Here you can call your backend API
     try {
-      const response = await fetch('https://leap-chatbot-backend.onrender.com/process_key', {
+      const response = await fetch('https://leap-chatbot-backend.onrender.com/warning', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
