@@ -358,7 +358,7 @@ function App() {
 
   const handleDeleteFiles = async () => {
     try {
-      const response = await fetch('/delete-dot-graph', {
+      const response = await fetch('https://leap-chatbot-backend.onrender.com/delete-dot-graph', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
