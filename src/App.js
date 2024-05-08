@@ -12,26 +12,84 @@ import { Input } from "react-chat-elements";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
+// document.addEventListener('DOMContentLoaded', function () {
+//   fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   })
+//     .then(response => response.json())
+//     .then(data => console.log('Success:', data))
+//     .catch((error) => {
+//       console.error('Error:', error);
+//     });
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  // Function to make a POST request
+  function deleteFiles() {
+    fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
     .then(response => response.json())
     .then(data => console.log('Success:', data))
     .catch((error) => {
       console.error('Error:', error);
     });
+  }
+
+  // Call deleteFiles initially
+  deleteFiles();
+
+  // Setup the idle timer and countdown display
+  let idleTimer;
+  let countdown;
+  let countdownValue = 10; // Countdown starts from 30 seconds
+  const countdownDisplay = document.createElement('div');
+  countdownDisplay.style.position = 'fixed';
+  countdownDisplay.style.bottom = '20px';
+  countdownDisplay.style.right = '20px';
+  countdownDisplay.style.padding = '10px';
+  countdownDisplay.style.backgroundColor = 'lightgrey';
+  countdownDisplay.style.borderRadius = '5px';
+  countdownDisplay.style.display = 'none'; // Initially hidden
+  document.body.appendChild(countdownDisplay);
+
+  function startCountdown() {
+    countdownDisplay.style.display = 'block'; // Show the countdown
+    countdown = setInterval(function() {
+      countdownDisplay.textContent = 'Time until reload: ' + countdownValue + 's';
+      countdownValue--;
+      if (countdownValue < 0) {
+        window.location.reload(); // Reload the page
+      }
+    }, 1000);
+  }
+
+  function resetTimer() {
+    clearTimeout(idleTimer);
+    clearInterval(countdown);
+    countdownValue = 30; // Reset countdown to 30 seconds
+    countdownDisplay.style.display = 'none'; // Hide the countdown
+
+    idleTimer = setTimeout(() => {
+      startCountdown(); // Start the countdown after 90 seconds of inactivity
+    }, 30000); // 90 seconds before the countdown starts
+  }
+
+  // Reset the timer whenever user interacts with the document
+  document.addEventListener('mousemove', resetTimer);
+  document.addEventListener('keydown', resetTimer);
+  document.addEventListener('scroll', resetTimer);
+  document.addEventListener('click', resetTimer);
+
+  // Set the initial timer
+  resetTimer();
 });
-
-window.addEventListener('beforeunload', function (event) {
-  // Your logic here
-  navigator.sendBeacon('https://leap-chatbot-backend.onrender.com/delete-files', '');
-});
-
-
 
 function App() {
   const [messages, setMessages] = useState([]);
