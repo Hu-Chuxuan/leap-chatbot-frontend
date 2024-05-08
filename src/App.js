@@ -50,6 +50,8 @@ function App() {
   const [warning, setWarning] = useState(false);
   const [leapwarning, setLeapwarning] = useState(false);
 
+  const [isBusy, setIsbusy] = useState(false);
+
   const [filePaths, setFilePaths] = useState({ result: '', augmentedTable: '' });
   const [timestamp, setTimestamp] = useState('');
 
@@ -104,7 +106,7 @@ function App() {
   // }, [code]);
 
   const handleKeySubmit = async (apikey, org) => {
-    setIsModalOpen(false); // Close the modal after submitting
+    // setIsModalOpen(false); // Close the modal after submitting
     // Here you can call your backend API
     try {
       const response = await fetch('https://leap-chatbot-backend.onrender.com/process_key', { //DEMO: change back to process_key
@@ -115,8 +117,15 @@ function App() {
         body: JSON.stringify({ apikey, org }),
       });
       const data = await response.json();
-      setIsModalOpen(false); // Close the modal after submitting
-      setMessages(prev => [...prev, { text: "Hi! Nice to meet you - I'm LEAP! 🤓\n\n 📢 I will first briefly walk you through some instructions 📢  \n⬇️ You can upload data and type query in the input section at the bottom. \n ➡️ While I'm working, you can check my executed code in my 'Codespace', and my current progress in my 'Workspace' on the right. You can also turn on the 'Verbose Mode' in my 'Workspace' to get more details, e.g., the costs. \n ⏺️ Our messages will be displayed here. \n\n You are all set! 🎉 \n Please start by uploading your data as a SINGLE csv file.", type: "desc", from: 'bot' }]);
+
+      if (data.message != "FULL") {
+        setIsbusy(false);
+        setIsModalOpen(false); // Close the modal after submitting
+        setMessages(prev => [...prev, { text: "Hi! Nice to meet you - I'm LEAP! 🤓\n\n 📢 I will first briefly walk you through some instructions 📢  \n⬇️ You can upload data and type query in the input section at the bottom. \n ➡️ While I'm working, you can check my executed code in my 'Codespace', and my current progress in my 'Workspace' on the right. You can also turn on the 'Verbose Mode' in my 'Workspace' to get more details, e.g., the costs. \n ⏺️ Our messages will be displayed here. \n\n You are all set! 🎉 \n Please start by uploading your data as a SINGLE csv file.", type: "desc", from: 'bot' }]);
+      }
+      else {
+        setIsbusy(true);
+      }
 
     } catch (error) {
       console.error('Error submitting password:', error);
@@ -432,7 +441,7 @@ function App() {
 
   return (
     <div className="App">
-      <KeyModal isOpen={isModalOpen} onSubmit={handleKeySubmit} />
+      <KeyModal isOpen={isModalOpen} onSubmit={handleKeySubmit} isBusy={isBusy}/>
       <div className="grid-container" style={{ gridTemplateColumns: "1fr 1fr" }}>
         <div className="chat-section">
           {/* <header className="App-header"> */}
