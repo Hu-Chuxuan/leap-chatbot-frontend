@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+window.addEventListener('beforeunload', function (event) {
+  // Your logic here
+  navigator.sendBeacon('https://leap-chatbot-backend.onrender.com/delete-files', '');
+});
+
+
 
 function App() {
   const [messages, setMessages] = useState([]);
