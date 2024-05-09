@@ -624,7 +624,7 @@ function App() {
             bottom: '0',        // Positions the element at the bottom of the viewport
             left: '0',          // Aligns the element to the left of the viewport
             right: '0',         // Aligns the element to the right of the viewport
-            width: '100%',      // Ensures the element spans the full width of the viewport
+            width: '50%',      // Ensures the element spans the full width of the viewport
             fontSize: '15px',
             display: 'flex',
             flexDirection: 'column',
