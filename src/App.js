@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Setup the idle timer and countdown display
   let idleTimer;
   let countdown;
-  let countdownValue = 10; // Countdown starts from 30 seconds
+  let countdownValue = 30; // Countdown starts from 30 seconds
   const countdownDisplay = document.createElement('div');
   countdownDisplay.style.position = 'fixed';
   countdownDisplay.style.top = '0%';
@@ -62,14 +62,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function startCountdown() {
     countdownDisplay.style.display = 'block'; // Show the countdown
+    // Update display immediately before starting the interval
+    countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
     countdown = setInterval(function() {
-      countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
-      countdownValue--;
+      countdownValue--; // Decrement before updating text
       if (countdownValue < 0) {
         window.location.reload(); // Reload the page
+      } else {
+        countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
       }
     }, 1000);
   }
+  
 
   function resetTimer() {
     clearTimeout(idleTimer);
@@ -395,6 +399,10 @@ function App() {
               const data_new = data.slice("VERBOSE:".length).trim();
               setVerbose(prev => [...prev, false]);
               setBackendOutputs(prev => [...prev, data_new]);
+            }
+            else if (data.startsWith("########## FeedbackError: ")) {
+              const data_new = data.slice("########## FeedbackError: ".length).trim();
+              setMessages(prev => [...prev, { text: data_new, type: "desc", from: 'bot' }]);
             }
             else {
               setBackendOutputs(prev => [...prev, data]);
