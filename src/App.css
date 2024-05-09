@@ -449,3 +449,30 @@ li {
   color: black !important;
   cursor: pointer !important;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-block; /* Makes the container only as big as its contents */
+  cursor: pointer; /* Ensures the cursor changes to a pointer over the image */
+}
+
+.tooltip-text {
+  visibility: hidden; /* Hide tooltip by default */
+  width: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%; /* Position it above the image */
+  left: 50%; /* Center the tooltip */
+  transform: translateX(-50%); /* Ensure it's perfectly centered */
+  white-space: nowrap; /* Prevents the tooltip from wrapping */
+  font-size: 12px;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible; /* Show tooltip on hover */
+}

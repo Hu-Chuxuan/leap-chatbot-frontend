@@ -692,7 +692,10 @@ function App() {
               ) : (
                 <div className="form-container">
                 <Input type="text" value={query} onKeyDown={handleMessageInput} onChange={(e) => setQuery(e.target.value)} placeholder="Message LEAP..." />
-                <img src={sendImg} className="send-message" title="Send Message" onClick={handleSubmit}/>
+                <div className="tooltip-container">
+                  <img src={sendImg} className="send-message" onClick={handleSubmit} />
+                  <span className="tooltip-text">Send Message</span>
+                </div>
                 </div>
                 )
               }
