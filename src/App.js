@@ -51,18 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
   let countdownValue = 10; // Countdown starts from 30 seconds
   const countdownDisplay = document.createElement('div');
   countdownDisplay.style.position = 'fixed';
-  countdownDisplay.style.bottom = '20px';
-  countdownDisplay.style.right = '20px';
+  countdownDisplay.style.top = '0%';
+  countdownDisplay.style.right = '38%';
   countdownDisplay.style.padding = '10px';
   countdownDisplay.style.backgroundColor = 'lightgrey';
   countdownDisplay.style.borderRadius = '5px';
   countdownDisplay.style.display = 'none'; // Initially hidden
+  countdownDisplay.style.zIndex = 10000000000000; // Initially hidden
   document.body.appendChild(countdownDisplay);
 
   function startCountdown() {
     countdownDisplay.style.display = 'block'; // Show the countdown
     countdown = setInterval(function() {
-      countdownDisplay.textContent = 'Time until reload: ' + countdownValue + 's';
+      countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
       countdownValue--;
       if (countdownValue < 0) {
         window.location.reload(); // Reload the page
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     idleTimer = setTimeout(() => {
       startCountdown(); // Start the countdown after 90 seconds of inactivity
-    }, 30000); // 90 seconds before the countdown starts
+    }, 90000); // 90 seconds before the countdown starts
   }
 
   // Reset the timer whenever user interacts with the document
