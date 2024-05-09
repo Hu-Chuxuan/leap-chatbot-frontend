@@ -5,6 +5,7 @@ import './App.css';
 import humanImg from './user.jpg';
 import botImg from './bot.jpg';
 import downloadImg from './download.png'
+import sendImg from './send.svg'
 
 
 import "react-chat-elements/dist/main.css"
