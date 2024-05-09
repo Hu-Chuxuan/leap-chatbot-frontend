@@ -400,10 +400,6 @@ function App() {
               setVerbose(prev => [...prev, false]);
               setBackendOutputs(prev => [...prev, data_new]);
             }
-            else if (data.startsWith("########## FeedbackError: ")) {
-              const data_new = data.slice("########## FeedbackError: ".length).trim();
-              setMessages(prev => [...prev, { text: data_new, type: "desc", from: 'bot' }]);
-            }
             else {
               setBackendOutputs(prev => [...prev, data]);
               setVerbose(prev => [...prev, true]);
