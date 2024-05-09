@@ -508,6 +508,18 @@ function App() {
     }
   };
 
+  const handleSubmit = () => {
+    if (query.trim() !== '') {
+      setCode([]);
+      handleDeleteFiles();
+      handleSendMessage(query);
+      setBackendOutputs([]);
+      setVerbose([]);
+      setExtractedSentences([]);
+      setQuery('');  // Clear the input after sending
+    }
+  };
+
   return (
     <div className="App">
       <KeyModal isOpen={isModalOpen} onSubmit={handleKeySubmit} isBusy={isBusy}/>
@@ -676,7 +688,12 @@ function App() {
                 <div class="loader-container">
                   <div class="loader"></div>
                 </div>
-              ) : (<Input type="text" value={query} onKeyDown={handleMessageInput} onChange={(e) => setQuery(e.target.value)} placeholder="Message LEAP..." />)
+              ) : (
+                <div className="form-container">
+                <Input type="text" value={query} onKeyDown={handleMessageInput} onChange={(e) => setQuery(e.target.value)} placeholder="Message LEAP..." />
+                <img src={sendImg} className="send-message" title="Send Message" onClick={handleSubmit}/>
+                </div>
+                )
               }
             </div>
           </div>

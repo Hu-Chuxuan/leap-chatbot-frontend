@@ -187,6 +187,24 @@ li {
   vertical-align: middle;
 }
 
+.send-message {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+  border-radius: 50%; /* Makes the icon circular */
+  object-fit: cover; /* Ensures the image covers the area without being stretched */
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.form-container {
+  display: flex;
+  align-items: center; /* Centers items vertically in the container */
+}
+
+
 /* Message text should be on a new line */
 .message-text {
   display: block; /* Ensures it appears on a new line under the sender name */
