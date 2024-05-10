@@ -704,7 +704,7 @@ function App() {
           </div>
         </div>
           
-        <div className="output-section" style={{ height: `calc(100vh - ${fixedDivHeight}px)` }}>
+        <div className="output-section" style={{ height: '100vh' }}>
           {/* <h2 style={{textAlign: "left", marginLeft:"2px", marginTop:"5px", fontSize: "15px"}}>LEAP's Workspace</h2> */}
           <button class="tablink" style={{ fontWeight: currentSection === 'code'?'bold': 'normal', backgroundColor: currentSection === 'code' ? 'white' : 'grey', color: currentSection === 'code' ? 'black' : 'white' }} onClick={() => setCurrentSection('code')}>LEAP's Codespace</button>
           <button class="tablink" style={{ fontWeight: currentSection === 'outputs'?'bold':"normal", backgroundColor: currentSection === 'outputs' ? 'white' : 'grey', color: currentSection === 'outputs' ? 'black' : 'white' }}onClick={() => setCurrentSection('outputs')}>LEAP's Workspace</button>
@@ -717,7 +717,7 @@ function App() {
             // boxShadow: '0px -4px 10px rgba(0,0,0,0.1)',
             textAlign: 'center',
             padding: '20px',
-            height: `calc(100vh - ${fixedDivHeight}px - 50px)`,
+            height: '85vh',
             overflowY: 'auto'
           }}>
             {code.length > 0 && (
@@ -788,7 +788,7 @@ function App() {
               </div>
             <label htmlFor="toggle" className="toggle-text">Verbose Mode</label>
             </div>)}
-            <div style={{ overflowY: 'auto', height: `calc(100vh - ${fixedDivHeight}px - 15vh)`}}>
+            <div style={{ overflowY: 'auto', height: '85vh'}}>
               <div>
                 {showImage && (
                   <div>
