@@ -109,7 +109,7 @@ function App() {
     document.body.appendChild(countdownDisplay);
   
     function startCountdown() {
-      if (!saved) { // Check if modal is not open
+      if (!isModalOpen) { // Check if modal is not open
         countdownDisplay.style.display = 'block'; // Show the countdown
         countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
         countdown = setInterval(function() {
@@ -129,7 +129,7 @@ function App() {
       countdownValue = 30;
       countdownDisplay.style.display = 'none';
   
-      if (!saved) { // Check if modal is not open
+      if (!isModalOpen) { // Check if modal is not open
         idleTimer = setTimeout(() => {
           startCountdown();
         }, 90000); // 90 seconds before the countdown starts
@@ -137,7 +137,7 @@ function App() {
     }
   
     function resetTimerIfModalClosed() {
-      if (!saved) {
+      if (!isModalOpen) {
         resetTimer();
       }
     }
