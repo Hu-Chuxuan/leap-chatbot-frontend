@@ -13,99 +13,6 @@ import { Input } from "react-chat-elements";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
-// document.addEventListener('DOMContentLoaded', function () {
-//   fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   })
-//     .then(response => response.json())
-//     .then(data => console.log('Success:', data))
-//     .catch((error) => {
-//       console.error('Error:', error);
-//     });
-// });
-
-const [isModalOpen, setIsModalOpen] = useState(true);
-
-document.addEventListener('DOMContentLoaded', function () {
-  function deleteFiles() {
-    fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }
-
-  if (!isModalOpen) {
-    deleteFiles(); // Call deleteFiles initially
-  }
-
-  let idleTimer;
-  let countdown;
-  let countdownValue = 30;
-  const countdownDisplay = document.createElement('div');
-  countdownDisplay.style.position = 'fixed';
-  countdownDisplay.style.top = '0%';
-  countdownDisplay.style.right = '38%';
-  countdownDisplay.style.padding = '10px';
-  countdownDisplay.style.backgroundColor = 'lightgrey';
-  countdownDisplay.style.borderRadius = '5px';
-  countdownDisplay.style.display = 'none';
-  countdownDisplay.style.zIndex = 10000000000000;
-  document.body.appendChild(countdownDisplay);
-
-  function startCountdown() {
-    if (!isModalOpen) { // Check if modal is not open
-      countdownDisplay.style.display = 'block'; // Show the countdown
-      countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
-      countdown = setInterval(function() {
-        countdownValue--;
-        if (countdownValue < 0) {
-          window.location.reload();
-        } else {
-          countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
-        }
-      }, 1000);
-    }
-  }
-
-  function resetTimer() {
-    clearTimeout(idleTimer);
-    clearInterval(countdown);
-    countdownValue = 30;
-    countdownDisplay.style.display = 'none';
-
-    if (!isModalOpen) { // Check if modal is not open
-      idleTimer = setTimeout(() => {
-        startCountdown();
-      }, 90000); // 90 seconds before the countdown starts
-    }
-  }
-
-  function resetTimerIfModalClosed() {
-    if (!isModalOpen) {
-      resetTimer();
-    }
-  }
-
-  // Reset the timer whenever user interacts with the document and the modal is not open
-  document.addEventListener('mousemove', resetTimerIfModalClosed);
-  document.addEventListener('keydown', resetTimerIfModalClosed);
-  document.addEventListener('scroll', resetTimerIfModalClosed);
-  document.addEventListener('click', resetTimerIfModalClosed);
-
-  // Set the initial timer
-  resetTimer();
-});
-
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -130,6 +37,7 @@ function App() {
   const [leapwarning, setLeapwarning] = useState(false);
 
   const [isBusy, setIsbusy] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [filePaths, setFilePaths] = useState({ result: '', augmentedTable: '' });
   const [timestamp, setTimestamp] = useState('');
@@ -163,6 +71,84 @@ function App() {
   useEffect(() => {
     // Automatically open the modal when the page loads
     setIsModalOpen(true);
+  }, []);
+
+  useEffect(() => {
+    // Automatically open the modal when the page loads
+    function deleteFiles() {
+      fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+  
+    if (!isModalOpen) {
+      deleteFiles(); // Call deleteFiles initially
+    }
+  
+    let idleTimer;
+    let countdown;
+    let countdownValue = 30;
+    const countdownDisplay = document.createElement('div');
+    countdownDisplay.style.position = 'fixed';
+    countdownDisplay.style.top = '0%';
+    countdownDisplay.style.right = '38%';
+    countdownDisplay.style.padding = '10px';
+    countdownDisplay.style.backgroundColor = 'lightgrey';
+    countdownDisplay.style.borderRadius = '5px';
+    countdownDisplay.style.display = 'none';
+    countdownDisplay.style.zIndex = 10000000000000;
+    document.body.appendChild(countdownDisplay);
+  
+    function startCountdown() {
+      if (!isModalOpen) { // Check if modal is not open
+        countdownDisplay.style.display = 'block'; // Show the countdown
+        countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
+        countdown = setInterval(function() {
+          countdownValue--;
+          if (countdownValue < 0) {
+            window.location.reload();
+          } else {
+            countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
+          }
+        }, 1000);
+      }
+    }
+  
+    function resetTimer() {
+      clearTimeout(idleTimer);
+      clearInterval(countdown);
+      countdownValue = 30;
+      countdownDisplay.style.display = 'none';
+  
+      if (!isModalOpen) { // Check if modal is not open
+        idleTimer = setTimeout(() => {
+          startCountdown();
+        }, 90000); // 90 seconds before the countdown starts
+      }
+    }
+  
+    function resetTimerIfModalClosed() {
+      if (!isModalOpen) {
+        resetTimer();
+      }
+    }
+  
+    // Reset the timer whenever user interacts with the document and the modal is not open
+    document.addEventListener('mousemove', resetTimerIfModalClosed);
+    document.addEventListener('keydown', resetTimerIfModalClosed);
+    document.addEventListener('scroll', resetTimerIfModalClosed);
+    document.addEventListener('click', resetTimerIfModalClosed);
+  
+    // Set the initial timer
+    resetTimer();
   }, []);
 
 
