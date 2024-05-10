@@ -16,6 +16,8 @@ function KeyModal({ isOpen, onSubmit, isBusy }) {
     const handleSubmit = (event) => {
         event.preventDefault(); // Prevent the form from refreshing the page
         onSubmit(apikey, org); // Pass the key and org to the parent component
+        setApikey('');
+        setOrg('');
     };
 
     if (!isOpen) {

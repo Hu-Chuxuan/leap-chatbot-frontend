@@ -28,7 +28,8 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 // });
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Function to make a POST request
+  let isModalOpen = false; // This should be updated based on your application's modal state
+
   function deleteFiles() {
     fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
       method: 'POST',
@@ -43,13 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Call deleteFiles initially
-  deleteFiles();
+  deleteFiles(); // Call deleteFiles initially
 
-  // Setup the idle timer and countdown display
   let idleTimer;
   let countdown;
-  let countdownValue = 30; // Countdown starts from 30 seconds
+  let countdownValue = 30;
   const countdownDisplay = document.createElement('div');
   countdownDisplay.style.position = 'fixed';
   countdownDisplay.style.top = '0%';
@@ -57,45 +56,54 @@ document.addEventListener('DOMContentLoaded', function () {
   countdownDisplay.style.padding = '10px';
   countdownDisplay.style.backgroundColor = 'lightgrey';
   countdownDisplay.style.borderRadius = '5px';
-  countdownDisplay.style.display = 'none'; // Initially hidden
-  countdownDisplay.style.zIndex = 10000000000000; // Initially hidden
+  countdownDisplay.style.display = 'none';
+  countdownDisplay.style.zIndex = 10000000000000;
   document.body.appendChild(countdownDisplay);
 
   function startCountdown() {
-    countdownDisplay.style.display = 'block'; // Show the countdown
-    // Update display immediately before starting the interval
-    countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
-    countdown = setInterval(function() {
-      countdownValue--; // Decrement before updating text
-      if (countdownValue < 0) {
-        window.location.reload(); // Reload the page
-      } else {
-        countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
-      }
-    }, 1000);
+    if (!isModalOpen) { // Check if modal is not open
+      countdownDisplay.style.display = 'block'; // Show the countdown
+      countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
+      countdown = setInterval(function() {
+        countdownValue--;
+        if (countdownValue < 0) {
+          window.location.reload();
+        } else {
+          countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
+        }
+      }, 1000);
+    }
   }
-  
 
   function resetTimer() {
     clearTimeout(idleTimer);
     clearInterval(countdown);
-    countdownValue = 30; // Reset countdown to 30 seconds
-    countdownDisplay.style.display = 'none'; // Hide the countdown
+    countdownValue = 30;
+    countdownDisplay.style.display = 'none';
 
-    idleTimer = setTimeout(() => {
-      startCountdown(); // Start the countdown after 90 seconds of inactivity
-    }, 90000); // 90 seconds before the countdown starts
+    if (!isModalOpen) { // Check if modal is not open
+      idleTimer = setTimeout(() => {
+        startCountdown();
+      }, 90000); // 90 seconds before the countdown starts
+    }
   }
 
-  // Reset the timer whenever user interacts with the document
-  document.addEventListener('mousemove', resetTimer);
-  document.addEventListener('keydown', resetTimer);
-  document.addEventListener('scroll', resetTimer);
-  document.addEventListener('click', resetTimer);
+  function resetTimerIfModalClosed() {
+    if (!isModalOpen) {
+      resetTimer();
+    }
+  }
+
+  // Reset the timer whenever user interacts with the document and the modal is not open
+  document.addEventListener('mousemove', resetTimerIfModalClosed);
+  document.addEventListener('keydown', resetTimerIfModalClosed);
+  document.addEventListener('scroll', resetTimerIfModalClosed);
+  document.addEventListener('click', resetTimerIfModalClosed);
 
   // Set the initial timer
   resetTimer();
 });
+
 
 function App() {
   const [messages, setMessages] = useState([]);
