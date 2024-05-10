@@ -150,7 +150,7 @@ function App() {
   
     // Set the initial timer
     resetTimer();
-  }, []);
+  }, [isModalOpen]);
 
 
   useEffect(() => {
