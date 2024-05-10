@@ -88,7 +88,7 @@ function App() {
       });
     }
 
-    const saved = localStorage.getItem('isModalOpen') !== null ? JSON.parse(localStorage.getItem('isModalOpen')) : false;
+    const saved = sessionStorage.getItem('isModalOpen') !== null ? JSON.parse(sessionStorage.getItem('isModalOpen')) : true;
   
     if (!saved) {
       deleteFiles(); // Call deleteFiles initially
@@ -160,7 +160,7 @@ function App() {
 
   useEffect(() => {
     // Store the state when it changes
-    localStorage.setItem('isModalOpen', JSON.stringify(isModalOpen));
+    sessionStorage.setItem('isModalOpen', JSON.stringify(isModalOpen));
   }, [isModalOpen]);
 
   // useEffect(() => {
