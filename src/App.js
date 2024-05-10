@@ -27,9 +27,9 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 //     });
 // });
 
-document.addEventListener('DOMContentLoaded', function () {
-  let isModalOpen = false; // This should be updated based on your application's modal state
+const [isModalOpen, setIsModalOpen] = useState(true);
 
+document.addEventListener('DOMContentLoaded', function () {
   function deleteFiles() {
     fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
       method: 'POST',
@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  deleteFiles(); // Call deleteFiles initially
+  if (!isModalOpen) {
+    deleteFiles(); // Call deleteFiles initially
+  }
 
   let idleTimer;
   let countdown;
@@ -120,7 +122,6 @@ function App() {
 
   const [file, setFile] = useState(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(true);
   const [refreshFlag, setRefreshFlag] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
