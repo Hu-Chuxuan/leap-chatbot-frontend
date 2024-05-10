@@ -717,7 +717,7 @@ function App() {
             // boxShadow: '0px -4px 10px rgba(0,0,0,0.1)',
             textAlign: 'center',
             padding: '20px',
-            height: '85vh',
+            height: '100vh',
             overflowY: 'auto'
           }}>
             {code.length > 0 && (
