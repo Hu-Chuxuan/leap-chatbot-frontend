@@ -88,7 +88,7 @@ function App() {
       });
     }
 
-    const saved = localStorage.getItem('isModalOpen') !== null ? JSON.parse(saved) : false;
+    const saved = localStorage.getItem('isModalOpen') !== null ? JSON.parse(localStorage.getItem('isModalOpen')) : false;
   
     if (!saved) {
       deleteFiles(); // Call deleteFiles initially
