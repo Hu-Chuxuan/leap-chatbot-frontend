@@ -74,7 +74,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Automatically open the modal when the page loads
     function deleteFiles() {
       fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
         method: 'POST',
@@ -88,8 +87,10 @@ function App() {
         console.error('Error:', error);
       });
     }
+
+    const saved = localStorage.getItem('isModalOpen') !== null ? JSON.parse(saved) : false;
   
-    if (!isModalOpen) {
+    if (!saved) {
       deleteFiles(); // Call deleteFiles initially
     }
   
@@ -108,7 +109,7 @@ function App() {
     document.body.appendChild(countdownDisplay);
   
     function startCountdown() {
-      if (!isModalOpen) { // Check if modal is not open
+      if (!saved) { // Check if modal is not open
         countdownDisplay.style.display = 'block'; // Show the countdown
         countdownDisplay.textContent = 'Idle detected ⚠️ Reload after ' + countdownValue + ' seconds';
         countdown = setInterval(function() {
@@ -128,7 +129,7 @@ function App() {
       countdownValue = 30;
       countdownDisplay.style.display = 'none';
   
-      if (!isModalOpen) { // Check if modal is not open
+      if (!saved) { // Check if modal is not open
         idleTimer = setTimeout(() => {
           startCountdown();
         }, 90000); // 90 seconds before the countdown starts
@@ -136,7 +137,7 @@ function App() {
     }
   
     function resetTimerIfModalClosed() {
-      if (!isModalOpen) {
+      if (!saved) {
         resetTimer();
       }
     }
@@ -156,6 +157,11 @@ function App() {
     // Highlight all code on the page
     hljs.highlightAll();
   });
+
+  useEffect(() => {
+    // Store the state when it changes
+    localStorage.setItem('isModalOpen', JSON.stringify(isModalOpen));
+  }, [isModalOpen]);
 
   // useEffect(() => {
   //   if (codeRef.current) {
