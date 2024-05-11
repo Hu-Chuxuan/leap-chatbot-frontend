@@ -202,9 +202,15 @@ function App() {
   const handleKeySubmit = async (apikey, org) => {
     // setIsModalOpen(false); // Close the modal after submitting
     // Here you can call your backend API
+    function isIpad() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      return /iPad|Macintosh/i.test(userAgent) && ('ontouchstart' in window || navigator.maxTouchPoints > 1);
+  }
+  
     function isMobileDevice() {
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || isIpad();
     }
+    
 
     if (isMobileDevice()) {
       setIsmobile(true);
