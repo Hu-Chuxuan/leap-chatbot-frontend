@@ -57,6 +57,20 @@ function App() {
   const [currentSection, setCurrentSection] = useState('code');  // Default to 'code'
 
   useEffect(() => {
+    function deleteFiles() {
+      fetch('https://leap-chatbot-backend.onrender.com/delete-files', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+    
     const handleBeforeUnload = (event) => {
       const saved = sessionStorage.getItem('isModalOpen') !== null ? JSON.parse(sessionStorage.getItem('isModalOpen')) : true;
   
