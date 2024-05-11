@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-function KeyModal({ isOpen, onSubmit, isBusy }) {
+function KeyModal({ isOpen, onSubmit, isBusy, isMobile }) {
     const [apikey, setApikey] = React.useState('');
     const [org, setOrg] = React.useState('');
 
@@ -55,6 +55,7 @@ function KeyModal({ isOpen, onSubmit, isBusy }) {
         <div class="form-style-6" style={{ position: 'fixed', height: '45%', width: '90%', top: '30vh', left: 0, right: 0, bottom: 0, alignItems: 'center', zIndex: '10000', justifyContent: 'center' }}>
         <h1>LEAP needs something from you...</h1>
         {isBusy && (<div style={{ marginBottom: "5px", color: "grey"}}>LEAP is busy...😴 Please try again later!</div>)}
+        {isMobile && (<div style={{ marginBottom: "5px", color: "grey"}}>LEAP can only work with laptop 💻</div>)}
         <form onSubmit={handleSubmit}>
         <label class="label-style" style={{textAlign:"left", width: "100%"}}>OpenAI API-Key <span class="required">*</span>
         <input class="input-style" type="password" name="field1" value={apikey} onChange={handleKeyChange} autoFocus/>

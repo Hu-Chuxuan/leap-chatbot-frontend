@@ -37,6 +37,7 @@ function App() {
   const [leapwarning, setLeapwarning] = useState(false);
 
   const [isBusy, setIsbusy] = useState(false);
+  const [ismobile, setIsmobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [filePaths, setFilePaths] = useState({ result: '', augmentedTable: '' });
@@ -76,36 +77,6 @@ function App() {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
-
-  useEffect(() => {
-    function deleteFiles() {
-      navigator.sendBeacon('https://leap-chatbot-backend.onrender.com/delete-files', '');
-    }
-
-    function isMobileDevice() {
-        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-
-    const handleVisibilityChange = () => {
-        if (document.visibilityState === 'hidden') {
-          const saved = sessionStorage.getItem('isModalOpen') !== null ? JSON.parse(sessionStorage.getItem('isModalOpen')) : true;
-          if (!saved) {
-            deleteFiles(); // Call deleteFiles initially
-          }
-        }
-    };
-
-    if (isMobileDevice()) {
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-    }
-
-    // Cleanup to remove the event listener
-    return () => {
-        if (isMobileDevice()) {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        }
-    };
-}, []);
 
 
   useEffect(() => {
@@ -231,6 +202,16 @@ function App() {
   const handleKeySubmit = async (apikey, org) => {
     // setIsModalOpen(false); // Close the modal after submitting
     // Here you can call your backend API
+    function isMobileDevice() {
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+
+    if (isMobileDevice()) {
+      setIsmobile(true);
+      return;
+    }
+    setIsmobile(false);
+
     try {
       const response = await fetch('https://leap-chatbot-backend.onrender.com/process_key', { //DEMO: change back to process_key
         method: 'POST',
@@ -576,7 +557,7 @@ function App() {
 
   return (
     <div className="App">
-      <KeyModal isOpen={isModalOpen} onSubmit={handleKeySubmit} isBusy={isBusy}/>
+      <KeyModal isOpen={isModalOpen} onSubmit={handleKeySubmit} isBusy={isBusy} isMobile={ismobile}/>
       <div className="grid-container" style={{ gridTemplateColumns: "1fr 1fr" }}>
         <div className="chat-section">
           {/* <header className="App-header"> */}
