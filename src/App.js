@@ -78,27 +78,35 @@ function App() {
   }, []);
 
   useEffect(() => {
+    function deleteFiles() {
+      navigator.sendBeacon('https://leap-chatbot-backend.onrender.com/delete-files', '');
+    }
+
     function isMobileDevice() {
         return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     }
 
-    function setupVisibilityChangeListener() {
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden') {
-              window.location.reload();
-            }
-        });
-    }
+    const handleVisibilityChange = () => {
+        if (document.visibilityState === 'hidden') {
+          const saved = sessionStorage.getItem('isModalOpen') !== null ? JSON.parse(sessionStorage.getItem('isModalOpen')) : true;
+          if (!saved) {
+            deleteFiles(); // Call deleteFiles initially
+          }
+        }
+    };
 
     if (isMobileDevice()) {
-        setupVisibilityChangeListener();
+        document.addEventListener('visibilitychange', handleVisibilityChange);
     }
 
-    // Optional cleanup to remove the event listener
+    // Cleanup to remove the event listener
     return () => {
-        document.removeEventListener('visibilitychange', setupVisibilityChangeListener);
+        if (isMobileDevice()) {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }
     };
 }, []);
+
 
   useEffect(() => {
     if (fixedDivRef.current) {
