@@ -78,6 +78,29 @@ function App() {
   }, []);
 
   useEffect(() => {
+    function isMobileDevice() {
+        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+
+    function setupVisibilityChangeListener() {
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+              window.location.reload();
+            }
+        });
+    }
+
+    if (isMobileDevice()) {
+        setupVisibilityChangeListener();
+    }
+
+    // Optional cleanup to remove the event listener
+    return () => {
+        document.removeEventListener('visibilitychange', setupVisibilityChangeListener);
+    };
+}, []);
+
+  useEffect(() => {
     if (fixedDivRef.current) {
       // Recalculate the height when dependencies change
       setFixedDivHeight(fixedDivRef.current.clientHeight);
