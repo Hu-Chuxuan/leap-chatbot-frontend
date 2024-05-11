@@ -57,6 +57,23 @@ function App() {
   const [currentSection, setCurrentSection] = useState('code');  // Default to 'code'
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      const saved = sessionStorage.getItem('isModalOpen') !== null ? JSON.parse(sessionStorage.getItem('isModalOpen')) : true;
+  
+      if (!saved) {
+        deleteFiles(); // Call deleteFiles initially
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
     if (fixedDivRef.current) {
       // Recalculate the height when dependencies change
       setFixedDivHeight(fixedDivRef.current.clientHeight);
