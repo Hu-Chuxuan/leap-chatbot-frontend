@@ -57,6 +57,14 @@ function App() {
   // const codeRef = useRef(null);
   const [currentSection, setCurrentSection] = useState('code');  // Default to 'code'
 
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   useEffect(() => {
     function deleteFiles() {
       navigator.sendBeacon('https://leap-chatbot-backend.onrender.com/delete-files', '');
@@ -567,10 +575,10 @@ function App() {
       <div className="grid-container" style={{ gridTemplateColumns: "1fr 1fr" }}>
         <div className="chat-section">
           {/* <header className="App-header"> */}
-          <div style={{ backgroundColor: "#282c34", height: `calc(100vh - ${fixedDivHeight}px)`, overflowY: 'auto', width: '100%', color: 'white' }}>
+          <div ref={scrollRef} style={{ backgroundColor: "#282c34", height: `calc(100vh - ${fixedDivHeight}px - 15px)`, overflowY: 'auto', width: '100%', color: 'white',   borderTopLeftRadius:'8px', borderTopRightRadius:'8px' }}>
             <ul>
               {messages.map((msg, index) => (
-                <li key={index}>
+                <li key={index} style={{marginTop: index > 0 && msg.from !== messages[index - 1].from ? '30px' : '0px'}}>
                   <div>
                     {msg.from === 'user' ? (
                       <>
@@ -622,8 +630,8 @@ function App() {
               {warning && (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <div style={{ marginTop: '-10px', width: '50%', display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '15px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleWarning(true)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>YES</div>
-                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '15px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleWarning(false)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>NO</div>
+                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '13px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleWarning(true)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>YES</div>
+                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '13px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleWarning(false)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>NO</div>
                   </div>
                 </div>
               )}
@@ -634,8 +642,8 @@ function App() {
               {leapwarning && (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <div style={{ marginTop: '-10px', width: '50%', display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '15px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleLeapWarning(false)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>YES</div>
-                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '15px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleLeapWarning(true)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>NO</div>
+                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '13px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleLeapWarning(false)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>YES</div>
+                    <div style={{ borderColor: 'white', color: 'white', width: '70%', fontSize: '13px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #ccc', padding: '5px' }} onClick={() => handleLeapWarning(true)} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>NO</div>
                   </div>
                 </div>
               )}
@@ -644,7 +652,7 @@ function App() {
             <div className="extracted-section">
               {extractedSentences && extractedSentences.map((sentence, index) => (
                 <div key={index}
-                  style={{ width: '70%', fontSize: '15px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #fff', color: 'white', padding: '5px' }}
+                  style={{ width: '70%', fontSize: '13px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px', border: '1px solid #fff', color: 'white', padding: '5px' }}
                   onClick={() => {
                     handleCopyToClipboard(sentence);
                     setQuery(sentence);
@@ -660,22 +668,24 @@ function App() {
           </div>
 
           <div ref={fixedDivRef} style={{
-            position: 'fixed', // This makes the element fixed relative to the viewport
-            bottom: '0',        // Positions the element at the bottom of the viewport
-            left: '0',          // Aligns the element to the left of the viewport
+            position: 'absolute', // This makes the element fixed relative to the viewport
+            bottom: '15px',        // Positions the element at the bottom of the viewport
+            left: '15px',          // Aligns the element to the left of the viewport
             right: '0',         // Aligns the element to the right of the viewport
-            width: '50%',      // Ensures the element spans the full width of the viewport
+            width: '48.3%',      // Ensures the element spans the full width of the viewport
             fontSize: '15px',
             display: 'flex',
+            // padding: '40px',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#282c34', // Optional: Change the background color if needed
             zIndex: '1000',
             borderTop: '1px solid #FFFFFF', // Adds a white top border with 3px thickness
-
+            borderBottomLeftRadius:'8px', 
+            borderBottomRightRadius:'8px'
           }}>
-            <div style={{ color: 'white', marginTop: '10px', fontSize: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '10px' }}>
+            <div style={{ color: 'white', marginTop: '10px', fontSize: '13px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '10px' }}>
               <div>
                 <label className="file-input-label">
                   <input
@@ -720,7 +730,7 @@ function App() {
             </div>
 
             {file && (
-              <div style={{ fontSize: '15px', marginBottom: '10px', color: 'white' }}>
+              <div style={{ fontSize: '13px', marginBottom: '10px', color: 'white' }}>
                 Uploaded File: {file.name}
               </div>
             )}
@@ -743,21 +753,22 @@ function App() {
           </div>
         </div>
           
-        <div className="output-section" style={{ height: '100vh' }}>
+        <div className="output-section" style={{ height: '100vh'}}>
           {/* <h2 style={{textAlign: "left", marginLeft:"2px", marginTop:"5px", fontSize: "15px"}}>LEAP's Workspace</h2> */}
-          <button class="tablink" style={{ fontWeight: currentSection === 'code'?'bold': 'normal', backgroundColor: currentSection === 'code' ? 'white' : 'grey', color: currentSection === 'code' ? 'black' : 'white' }} onClick={() => setCurrentSection('code')}>LEAP's Codespace</button>
-          <button class="tablink" style={{ fontWeight: currentSection === 'outputs'?'bold':"normal", backgroundColor: currentSection === 'outputs' ? 'white' : 'grey', color: currentSection === 'outputs' ? 'black' : 'white' }}onClick={() => setCurrentSection('outputs')}>LEAP's Workspace</button>
+          <button class="tablink" style={{ fontWeight: currentSection === 'code'?'bold': 'normal', backgroundColor: currentSection === 'code' ? 'white' : '#282c34', color: currentSection === 'code' ? 'black' : 'white' }} onClick={() => setCurrentSection('code')}>LEAP's Codespace</button>
+          <button class="tablink" style={{ fontWeight: currentSection === 'outputs'?'bold':"normal", backgroundColor: currentSection === 'outputs' ? 'white' : '#282c34', color: currentSection === 'outputs' ? 'black' : 'white' }}onClick={() => setCurrentSection('outputs')}>LEAP's Workspace</button>
           {currentSection === 'code' && (<div style={{
-            position: 'fixed',
-            top: 0,
-            width: '50%',
+            position: 'absolute',
+            // top: 0,
+            width: '47.5%',
             backgroundColor: 'white',
             // color: 'white',
             // boxShadow: '0px -4px 10px rgba(0,0,0,0.1)',
             textAlign: 'center',
-            padding: '20px',
-            height: '100vh',
-            overflowY: 'auto'
+            // padding: '20px',
+            height: '89.6vh',
+            overflowY: 'auto',
+            borderRadius: "8px"
           }}>
             {code.length > 0 && (
               <div style={{
@@ -767,10 +778,12 @@ function App() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                width: "100%",
+                width: "98%",
                 borderBottom: '1px solid #ddd',
-                marginBottom: '0px',
-                marginTop: '50px',
+                // marginBottom: '50px',
+                marginTop: '30px',
+                marginLeft: 'auto',  // Centers the div by pushing it equally from both sides
+                marginRight: 'auto'
               }}>
                 <span style={{fontSize: "11px", marginLeft: "3px"}}>python</span>
                 <button onClick={handleCopy} style={{
@@ -788,9 +801,11 @@ function App() {
               <pre style={{
                 textAlign: 'left',
                 marginTop: '0px',
-                width: '100%',
+                width: '98%',
                 height: '80vh',
                 overflowY: 'auto',
+                marginLeft: 'auto',  // Centers the div by pushing it equally from both sides
+                marginRight: 'auto'
               }}>
                 <code className="language-python">
                   {code.map((line, index) => (
@@ -807,7 +822,7 @@ function App() {
           )}
 
           {currentSection === 'outputs' && (
-          <div style={{ width: "50%", justifyContent: 'center', alignItems: 'center', position: "fixed", bottom: 0, height: "90%", textAlign: "center", flexGrow: 1, backgroundColor: "white"}}>
+          <div style={{ width: "47.5%", justifyContent: 'center', alignItems: 'center', position: "absolute", height: '89.6vh', textAlign: "center", flexGrow: 1, backgroundColor: "white", borderRadius: "8px"}}>
             {/* <h2>LEAP's Workspace
             </h2> */}
             { true &&
