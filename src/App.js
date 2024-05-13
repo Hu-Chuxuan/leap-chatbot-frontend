@@ -673,7 +673,7 @@ function App() {
             left: '15px',          // Aligns the element to the left of the viewport
             right: '0',         // Aligns the element to the right of the viewport
             width: '48.3%',      // Ensures the element spans the full width of the viewport
-            fontSize: '15px',
+            fontSize: '13px',
             display: 'flex',
             // padding: '40px',
             flexDirection: 'column',
@@ -730,7 +730,7 @@ function App() {
             </div>
 
             {file && (
-              <div style={{ fontSize: '13px', marginBottom: '10px', color: 'white' }}>
+              <div style={{ fontSize: '13px', marginTop: '-15px',  marginBottom: '10px', color: 'white' }}>
                 Uploaded File: {file.name}
               </div>
             )}
